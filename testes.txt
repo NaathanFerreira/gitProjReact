@@ -1,0 +1,36 @@
+import axios from 'axios'
+import { useState } from 'react'
+
+const url = "https://api.github.com/users"
+
+let initial_state = {
+  name: "",
+  bio: ""
+}
+
+export default props => {
+
+  const [state, setState] = useState(initial_state)
+
+  async function getUser(){
+    const response = await axios.get(`${url}/facebook`)
+    const user = response.data
+    const { name, bio } = user // destruct
+
+    setState({ name, bio })
+
+  }
+
+  return (
+    <div>
+      <button className="btn btn-primary"
+      onClick={() => getUser()}>
+        Request user data
+      </button>
+      <div>
+        <h1>Nome: {state.name}</h1>
+        <h1>Bio: {state.bio}</h1>
+      </div>
+    </div>
+  )
+}
