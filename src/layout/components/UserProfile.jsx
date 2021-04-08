@@ -7,10 +7,11 @@ import { FaUserAlt, FaLocationArrow, FaListAlt, FaLink, FaGithub, FaArrowCircleR
 
 import UserInfos from './widget/UserInfos'
 import If from './conditional/If'
+import Spinner from './widget/Spinner'
 
 function UserProfile(props) {
 
-    const { name, bio, photoUrl, location, blog, gitLink, reposCount, reposList, searched } = props
+    const { loading, name, bio, photoUrl, location, blog, gitLink, reposCount, reposList, searched } = props
 
     function renderRepos(reposList) {
         if (reposList.length > 0) {
@@ -30,36 +31,43 @@ function UserProfile(props) {
 
     return (
         <If test={searched}>
-            <div className="userProfile">
-                <div className="userInfos">
-                    <img src={photoUrl} alt="userPhoto" />
-                    <UserInfos title text={name ? name : "<No name>"}>
-                        <FaUserAlt />
-                    </UserInfos>
-                    <UserInfos text={bio ? bio : "<No bio>"}>
-                        <FaListAlt />
-                    </UserInfos>
-                    <UserInfos text={location ? location : "<No location>"}>
-                        <FaLocationArrow />
-                    </UserInfos>
-                    <UserInfos link={blog} text={blog ? "Blog" : "<No blog>"}>
-                        <FaLink />
-                    </UserInfos>
-                    <UserInfos link={gitLink} text="Visit on GitHub">
-                        <FaGithub />
-                    </UserInfos>
+            {loading ? (
+                <div className="userProfile spinner">
+                    <Spinner />
                 </div>
-                <div className="userRepos">
-                    <h5>Public repositories: {reposCount}</h5>
-                    {renderRepos(reposList)}
+            ) : (
+                <div className="userProfile">
+                    <div className="userInfos">
+                        <img src={photoUrl} alt="userPhoto" />
+                        <UserInfos title text={name ? name : "<No name>"}>
+                            <FaUserAlt />
+                        </UserInfos>
+                        <UserInfos text={bio ? bio : "<No bio>"}>
+                            <FaListAlt />
+                        </UserInfos>
+                        <UserInfos text={location ? location : "<No location>"}>
+                            <FaLocationArrow />
+                        </UserInfos>
+                        <UserInfos link={blog} text={blog ? "Blog" : "<No blog>"}>
+                            <FaLink />
+                        </UserInfos>
+                        <UserInfos link={gitLink} text="Visit on GitHub">
+                            <FaGithub />
+                        </UserInfos>
+                    </div>
+                    <div className="userRepos">
+                        <h5>Public repositories: {reposCount}</h5>
+                        {renderRepos(reposList)}
+                    </div>
                 </div>
-            </div>
+            )}
         </If>
     )
 }
 
 function matStateToProps(state) {
     return {
+        loading: state.user.loading,
         searched: state.user.searched,
         photoUrl: state.user.photoUrl,
         name: state.user.name,

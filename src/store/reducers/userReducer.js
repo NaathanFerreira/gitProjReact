@@ -1,29 +1,30 @@
-const initialState = {
-    searched: false,
-    photoUrl: "",
-    name: "",
-    bio: "",
-    location: "",
-    blog: "",
-    gitLink: "",
-    reposCount: 0,
-    reposList: [],
-}
+import initialState from '../initialState'
+import { NEW_USER, SET_LOADING, CLEAR_USER} from '../types'
 
 export default function(state = initialState, action){
     switch(action.type){
-        case "NEW_USER":
+        case NEW_USER:
+            const { avatar_url, name, bio, location, blog, html_url, public_repos} = action.payload.data
             return { ...state,
+                    loading: false,
                     searched: true, 
-                    photoUrl: action.payload.data.avatar_url,
-                    name: action.payload.data.name, 
-                    bio: action.payload.data.bio,
-                    location: action.payload.data.location,
-                    blog: action.payload.data.blog,
-                    gitLink: action.payload.data.html_url,
-                    reposCount: action.payload.data.public_repos,
+                    photoUrl: avatar_url,
+                    name: name, 
+                    bio: bio,
+                    location: location,
+                    blog: blog,
+                    gitLink: html_url,
+                    reposCount: public_repos,
                     reposList: action.reposList
                 }
+        case SET_LOADING:
+            return {
+                ...state, loading: true
+            }
+        case CLEAR_USER:
+            return {
+                ...initialState
+            }
         default:
             return state
     }

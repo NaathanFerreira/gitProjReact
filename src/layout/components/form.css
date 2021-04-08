@@ -18,7 +18,15 @@
 }
 
 .form .btn {
+    width: 100%;
+}
+
+.form .btn-primary {
+    width: 100%;
     background-color: #FBB829;
-    color: #000000;
     border: none;
+}
+
+.form .btn-primary:hover {
+    background-color:  #d89f23;
 }

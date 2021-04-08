@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { FaSearch } from 'react-icons/fa'
+import { FaSearch, FaTimes } from 'react-icons/fa'
 
 import './form.css'
 
 import { connect } from 'react-redux'
 
-import { findUser } from '../../store/actions/userActions'
+import { findUser, clearUser, setLoading } from '../../store/actions/userActions'
 
 function Form(props) {
 
@@ -17,6 +17,7 @@ function Form(props) {
 
     function keyHandler(e) {
         if (e.key === "Enter") {
+            props.setLoadingProp()
             props.findUserProp(userName)
         }
     }
@@ -25,14 +26,28 @@ function Form(props) {
         <div className="form">
             <p>Search users on GitHub</p>
             <div className="row">
-                <div className="col-11">
-                    <input type="text" className="form-control" id="userName" placeholder="Type a name to find users" 
-                    value={userName} onChange={onUserNameChange} onKeyUp={keyHandler}/>
+                <div className="col-12">
+                    <input type="text" className="form-control" id="userName" placeholder="Type a name to find users"
+                        value={userName} onChange={onUserNameChange} onKeyUp={keyHandler} />
                 </div>
-                <div className="col-1">
-                    <button className="btn btn-primary"
-                        onClick={() => props.findUserProp(userName)}>
-                        <FaSearch />
+            </div>
+            <div className="row mt-3">
+                <div className="col-6">
+                    <button className="btn btn-primary mr-3"
+                        onClick={() => {
+                            props.setLoadingProp()
+                            props.findUserProp(userName)
+                        }}>
+                        <FaSearch /> <strong>SEARCH</strong>
+                    </button>
+                </div>
+                <div className="col-6">
+                    <button className="btn btn-danger"
+                        onClick={() => {
+                            setUserName("")
+                            props.clearUserProp()
+                        }}>
+                        <FaTimes /> <strong>CLEAR</strong>
                     </button>
                 </div>
             </div>
@@ -45,7 +60,15 @@ function mapDispatchToProps(dispatch) {
         findUserProp(userName) {
             const action = findUser(userName)
             dispatch(action)
-        }
+        },
+        clearUserProp(){
+            const action = clearUser()
+            dispatch(action)
+        },
+        setLoadingProp(){
+            const action = setLoading()
+            dispatch(action)
+        },
     }
 }
 

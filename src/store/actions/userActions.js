@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { toastr } from 'react-redux-toastr'
+import { NEW_USER, SET_LOADING, CLEAR_USER} from '../types'
 
 const BASE_URL = "https://api.github.com/users"
 
@@ -10,9 +11,22 @@ export async function findUser(userName){
     const reposList = await getUserRepos(request.data.repos_url)
 
     return {
-        type: "NEW_USER",
+        type: NEW_USER,
         payload: request,
         reposList: reposList,
+    }
+}
+
+export function clearUser(){
+    return {
+        type: CLEAR_USER
+    }
+}
+
+
+export function setLoading(){
+    return {
+        type: SET_LOADING
     }
 }
 
@@ -24,5 +38,5 @@ async function getUserRepos(url){
 }
 
 async function validate(userName){
-    await axios.get(`${BASE_URL}/${userName}`).catch(e => toastr.error("Erro", e.message))
+    await axios.get(`${BASE_URL}/${userName}`).catch(e => toastr.error("Error", "User not found"))
 }
