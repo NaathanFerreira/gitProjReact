@@ -3,12 +3,21 @@ import UserProfile from '../../layout/components/UserProfile'
 
 const BASE_URL = "https://api.github.com/users"
 
-export function findUser(userName){
+export async function findUser(userName){
 
-    const request = axios.get(`${BASE_URL}/${userName}`)
+    const request = await axios.get(`${BASE_URL}/${userName}`)
+    const reposList = await getUserRepos(request.data.repos_url)
 
     return {
         type: "NEW_USER",
-        payload: request
+        payload: request,
+        reposList: reposList,
     }
+}
+
+async function getUserRepos(url){
+
+    const requestRepos = await axios.get(url)
+    return requestRepos.data
+
 }

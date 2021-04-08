@@ -5,10 +5,13 @@ import UserProfile from './components/UserProfile'
 import './content.css'
 
 export default props => {
-    return (
-        <div className="content">
-            <Form />
-            <UserProfile />
-        </div>
+    return (   
+        // <div className="main">
+
+        // </div>
+            <div className="content">
+                <Form />
+                <UserProfile />
+            </div>
     )
 }

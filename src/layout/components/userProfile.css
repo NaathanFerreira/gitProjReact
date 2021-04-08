@@ -1,9 +1,40 @@
 .userProfile {
-    margin-top: 1.2rem;
+    background-color: #FFF;
+
+    width: 80%;
+
+    margin: 1.2rem auto;
     padding: 1.5rem;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 
     border-radius: 4px;
     
     box-shadow: 0px 0px 10px #0004;
 
+
+}
+
+.userInfos {
+    border-right: 1px solid #0004;
+}
+
+.userInfos img {
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    width: 10rem;
+    height: 10rem;
+    border-radius: 5%;
+
+    margin-bottom: 1.3rem;
+}
+
+.userRepos {
+    margin-left: 1.5rem;
 }
