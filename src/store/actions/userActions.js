@@ -1,10 +1,11 @@
 import axios from 'axios'
-import UserProfile from '../../layout/components/UserProfile'
+import { toastr } from 'react-redux-toastr'
 
 const BASE_URL = "https://api.github.com/users"
 
 export async function findUser(userName){
 
+    validate(userName)
     const request = await axios.get(`${BASE_URL}/${userName}`)
     const reposList = await getUserRepos(request.data.repos_url)
 
@@ -20,4 +21,8 @@ async function getUserRepos(url){
     const requestRepos = await axios.get(url)
     return requestRepos.data
 
+}
+
+async function validate(userName){
+    await axios.get(`${BASE_URL}/${userName}`).catch(e => toastr.error("Erro", e.message))
 }

@@ -15,11 +15,11 @@ function Form(props) {
         setUserName(e.target.value)
     }
 
-    // function keyHandler(e) {
-    //     if (e.key === "Enter") {
-    //         console.log("Pesquisou !")
-    //     }
-    // }
+    function keyHandler(e) {
+        if (e.key === "Enter") {
+            props.findUserProp(userName)
+        }
+    }
 
     return (
         <div className="form">
@@ -27,7 +27,7 @@ function Form(props) {
             <div className="row">
                 <div className="col-11">
                     <input type="text" className="form-control" id="userName" placeholder="Type a name to find users" 
-                    value={userName} onChange={onUserNameChange}/>
+                    value={userName} onChange={onUserNameChange} onKeyUp={keyHandler}/>
                 </div>
                 <div className="col-1">
                     <button className="btn btn-primary"
